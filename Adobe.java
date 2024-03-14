@@ -12,22 +12,26 @@ class Account {
     // Attributes
     protected int accountNumber;
     protected double balance;
+
     // Constructor
     public Account(int accountNumber, double balance) {
         this.accountNumber = accountNumber;
         this.balance = balance;
     }
+
     // Methods
     public void deposit(double amount) {
         balance += amount;
     }
+
     public void withdraw(double amount) {
         if (balance >= amount) {
             balance -= amount;
         } else {
-            JOptionPane.showMessageDialog(null, "Insufficient funds.");
+            System.out.println("Insufficient funds.");
         }
     }
+
     public double getBalance() {
         return balance;
     }
@@ -38,6 +42,7 @@ class SavingsAccount extends Account {
     public SavingsAccount(int accountNumber, double balance) {
         super(accountNumber, balance);
     }
+
     // Method to calculate interest
     public void calculateInterest() {
         double interest = balance * 0.03; // 3% interest rate
@@ -50,6 +55,7 @@ class CheckingAccount extends Account {
     public CheckingAccount(int accountNumber, double balance) {
         super(accountNumber, balance);
     }
+
     // Method to deduct monthly fee
     public void deductMonthlyFee() {
         balance -= 5; // Monthly fee of $5
@@ -75,7 +81,6 @@ public class Adobe {
         frame.setLayout(null);
         frame.getContentPane().setBackground(Color.WHITE); 
 
-        // Set custom icon for the JFrame
         ImageIcon icon = new ImageIcon("cat.png");
         frame.setIconImage(icon.getImage());
 
@@ -105,16 +110,16 @@ public class Adobe {
 
         savingsButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null, "Savings Account Balance: Php" + savings.getBalance());
+                JOptionPane.showMessageDialog(null, "Savings Account Balance: Php" + savings.getBalance(), "Savings Account", JOptionPane.INFORMATION_MESSAGE);
             }
         });
 
         checkingButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null, "Account Balance: Php" + checking.getBalance());
+                JOptionPane.showMessageDialog(null, "Account Balance: Php" + checking.getBalance(), "Account balance", JOptionPane.INFORMATION_MESSAGE);
             }
         });
-
+        
         frame.setVisible(true);
     }
 }
