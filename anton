@@ -1,17 +1,63 @@
 import java.util.Scanner;
 
-public class BadSubscriptCaught {
+// EmployeeException class to store error messages
+class EmployeeException extends Exception {
+    private String errorMessage;
+
+    public EmployeeException(String message) {
+        errorMessage = message;
+    }
+
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+}
+
+// Class to store error messages
+class EmployeeMessages {
+    public static final String[] ERROR_MESSAGES = {
+            "Employee number must be numeric and between 1000 and 9999.",
+            "Hourly pay rate must be numeric and between $9.00 and $25.00."
+    };
+}
+
+// Main application class
+public class EmployeeDataEntry {
     public static void main(String[] args) {
-        String[] firstNames = {"John", "Emma", "Michael", "Sophia", "William", "Olivia", "James", "Ava", "Alexander", "Isabella"};
-
         Scanner scanner = new Scanner(System.in);
-
-        System.out.print("Enter an integer to display the name at that position: ");
+        
+        // Prompt user for employee data
+        System.out.print("Enter employee number: ");
+        String employeeNumberStr = scanner.nextLine();
+        
+        System.out.print("Enter hourly pay rate: ");
+        String payRateStr = scanner.nextLine();
+        
         try {
-            int index = scanner.nextInt();
-            System.out.println("Name at position " + index + ": " + firstNames[index]);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println("Error: Index is out of range. Please enter a number between 0 and 9.");
+            validateEmployeeData(employeeNumberStr, payRateStr);
+            System.out.println("Valid employee data");
+        } catch (EmployeeException e) {
+            System.out.println(e.getErrorMessage());
+        }
+    }
+
+    // Method to validate employee data
+    public static void validateEmployeeData(String employeeNumberStr, String payRateStr) throws EmployeeException {
+        // Check if employee number is numeric and within range
+        if (!employeeNumberStr.matches("\\d+") || Integer.parseInt(employeeNumberStr) < 1000 || Integer.parseInt(employeeNumberStr) > 9999) {
+            throw new EmployeeException(EmployeeMessages.ERROR_MESSAGES[0]);
+        }
+
+        // Check if pay rate is numeric and within range
+        double payRate;
+        try {
+            payRate = Double.parseDouble(payRateStr);
+        } catch (NumberFormatException e) {
+            throw new EmployeeException(EmployeeMessages.ERROR_MESSAGES[1]);
+        }
+
+        if (payRate < 9.00 || payRate > 25.00) {
+            throw new EmployeeException(EmployeeMessages.ERROR_MESSAGES[1]);
         }
     }
 }
