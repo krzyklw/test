@@ -1,0 +1,17 @@
+import java.util.Scanner;
+
+public class BadSubscriptCaught {
+    public static void main(String[] args) {
+        String[] firstNames = {"John", "Emma", "Michael", "Sophia", "William", "Olivia", "James", "Ava", "Alexander", "Isabella"};
+
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter an integer to display the name at that position: ");
+        try {
+            int index = scanner.nextInt();
+            System.out.println("Name at position " + index + ": " + firstNames[index]);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Error: Index is out of range. Please enter a number between 0 and 9.");
+        }
+    }
+}
